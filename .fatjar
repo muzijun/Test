@@ -1,0 +1,14 @@
+#Fat Jar Configuration File
+#Mon Mar 09 13:51:06 CST 2015
+onejar.license.required=false
+manifest.classpath=
+manifest.removesigners=true
+onejar.checkbox=false
+jarname=Test_fat.jar
+manifest.mergeall=true
+manifest.mainclass=
+manifest.file=<createnew>
+jarname.isextern=false
+onejar.expand=
+excludes=<jar|android-support-v4.jar>;<jar|annotations.jar>;<jar|android.jar>
+includes=

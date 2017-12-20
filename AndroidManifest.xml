@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.zy.phone"
+    android:versionCode="21"
+    android:versionName="1.2.1" >
+
+    <!-- 积分墙 -->
+    <uses-sdk
+        android:minSdkVersion="9"
+        android:targetSdkVersion="25" />
+
+    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.MOUNT_UNMOUNT_FILESYSTEMS"/>
+    <uses-permission android:name="android.permission.WAKE_LOCK" />
+     <!-- 
+    <uses-permission android:name="android.permission.RESTART_PACKAGES" />
+    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
+    
+     -->
+     
+	<!-- 震动状态任务完成sdk会发送通知 --> 
+	<uses-permission android:name= "android.permission.VIBRATE" /> 
+     
+    <uses-permission android:name="android.permission.GET_TASKS" />
+ 
+    <application
+        android:allowBackup="true"
+        android:icon="@drawable/logo"
+        android:label="@string/app_name"
+        android:theme="@style/AppTheme" >
+        <activity
+            android:name="com.zy.phone.sdk.TestActiyity"
+            android:label="@string/app_name" >
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+
+        <!-- 显示注册 -->
+        <activity android:name="com.zy.phone.sdk.SDKActivity" >
+            
+        </activity>
+        
+        <activity android:name="com.zy.phone.sdk.SDKActivityNoDisplay" android:theme="@android:style/Theme.NoDisplay"> </activity>
+         <!-- 广播注册 -->
+        <receiver android:name="com.zy.phone.service.BootReceiver" >
+            <intent-filter android:priority="1000" >
+                <action android:name="android.intent.action.PACKAGE_ADDED" />
+                <action android:name="android.intent.action.PACKAGE_REMOVED" />
+
+                <data android:scheme="package" />
+            </intent-filter>
+        </receiver>
+        
+        <service android:name="com.zy.phone.service.ZYService" >
+            
+        </service>
+        
+        <provider
+            android:name="android.support.v4.content.FileProvider"
+            android:authorities="com.zy.phone.fileprovider"
+            android:grantUriPermissions="true"
+            android:exported="false" >
+            <meta-data
+                android:name="android.support.FILE_PROVIDER_PATHS"
+                android:resource="@xml/file_paths" />
+        </provider>
+        
+    	
+    </application>
+</manifest>
