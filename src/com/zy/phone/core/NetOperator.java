@@ -13,10 +13,11 @@ import com.zy.phone.core.params.NetBzip;
 
 import android.content.Context;
 import android.os.Handler;
-import android.util.Log;
 
 public class NetOperator extends AbstractOperator{
 
+	private static final String TAG = NetOperator.class.getSimpleName();
+	
 	private RequestQueue mNewRequestQueue;
 	
 	private static final Handler mHandler= new Handler();
@@ -26,6 +27,86 @@ public class NetOperator extends AbstractOperator{
 		mNewRequestQueue = Volley.newRequestQueue(context);
 	}
 	
+	/*仅仅测试使用.
+	 public void fetchJsonByRequestParams(final String url, final Map<String, String> map, final IResponseListener<JSONObject> listener){
+		new Thread(){
+			public void run() {
+				StringRequest stringRequest = new StringRequest(Method.POST, url, new Listener<String>() {
+
+					@Override
+					public void onResponse(final String jsonObject) {
+						// TODO Auto-generated method stub
+						if(mapCache.containsKey(url))
+							mapCache.remove(url);
+						
+						
+						if(null != mReference && null != mReference.get()){
+							mHandler.post(new Runnable() {
+								
+								@Override
+								public void run() {
+									// TODO Auto-generated method stub
+//									listener.onResponse(jsonObject);
+									System.out.println("stringRequest json: " + jsonObject);
+								}
+							});
+						}
+					}
+				}, new Response.ErrorListener() {
+
+					@Override
+					public void onErrorResponse(final VolleyError error) {
+						// TODO Auto-generated method stub
+						if(mapCache.containsKey(url))
+							mapCache.remove(url);
+						
+						
+						if(null != mReference && null != mReference.get()){
+							mHandler.post(new Runnable() {
+								
+								@Override
+								public void run() {
+									// TODO Auto-generated method stub
+									listener.onErrorResponse(error);
+								}
+							});
+						}
+					}
+				}){
+
+					@Override
+					protected Map<String, String> getParams() throws AuthFailureError {
+						return map;
+					}
+					
+					@Override
+					public void cancel() {
+						// TODO Auto-generated method stub
+						if(mapCache.containsKey(url))
+							mapCache.remove(url);
+						
+						if(null != mReference && null != mReference.get()){
+							mHandler.post(new Runnable() {
+								
+								@Override
+								public void run() {
+									// TODO Auto-generated method stub
+									listener.cancel();
+								}
+							});
+						}
+						super.cancel();
+					}
+				
+				};
+				
+				stringRequest.setTag(NetOperator.class);
+				Request<String> request = mNewRequestQueue.add(stringRequest);
+				*//**用于处理取消操作使用.*//*
+			}
+			
+		}.start();
+	}*/
 	
 	/**
 	 * 根据指定参数和URl完成相应的参数请求.

@@ -26,11 +26,11 @@ import android.net.Uri;
 import android.os.Build;
 import android.text.TextUtils;
 import android.util.Log;
-
 public class Utils {
 
 	public static void installApp(Context context, String path) {
 		Intent intent = new Intent(Intent.ACTION_VIEW);
+		intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
 		// 设置目标应用安装包路径
 		intent.setDataAndType(Uri.fromFile(new File(path)),
 				"application/vnd.android.package-archive");
@@ -307,7 +307,7 @@ public class Utils {
 	 * @param packagename包名
 	 * @return
 	 */
-	public static void openapp(Context context,String packagename) {
+	public static void openApp(Context context,String packagename) {
 		PackageManager packageManager = context.getPackageManager();
 		PackageInfo pi = null;
 		try {
@@ -334,3 +334,4 @@ public class Utils {
 		}
 	}
 }
+

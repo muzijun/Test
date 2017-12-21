@@ -1,27 +1,27 @@
 package com.zy.phone.core;
 
 /**
- * 浣滆?咃細liemng on 2017/3/31
- * 閭锛?859686819@qq.com
+ * 作者：liemng on 2017/3/31
+ * 邮箱：859686819@qq.com
  */
 
 public class Constant {
 	public static final boolean DEBUG = true;
 	
-    public static final String VERSION = "1.2.1";//鐗堟湰
+    public static final String VERSION = "1.2.1";//版本
 
-    // 绉橀挜
+    // 秘钥
     public static String ADP_CODE = "AppCode";
 
-    // 鐢ㄦ埛ID锛岀敤浜庤褰曞紑鍙戣?呭簲鐢ㄧ殑鍞竴鐢ㄦ埛鏍囪瘑,default涓虹┖.
+    // 用户ID，用于记录开发者应用的唯一用户标识,default为空.
     public static String USER_ID = "";
 
 
-    //---鏁版嵁搴撶浉鍏抽厤缃?
+    //---数据库相关配置
     public static final String DATABASE_NAME = "zy.db";
     public static final int DATABASE_VERSION = 1;
     
-    //---鑾峰彇骞垮憡璇锋眰鍙傛暟.
+    //---获取广告请求参数.
     public static final String ADVERTS_LIST_URL = "http://sdk.chinazmob.com/api/GetAdsList.php";
     public static final String APPCODE = "AppCode";
     public static final String IMEI = "IMEI";
@@ -31,30 +31,30 @@ public class Constant {
     public static final String IMSI = "IMSI";
     public static final String ANDROID_ID = "AndroidId";
     public static final String SYSTEM_VERSION = "SysVer";
-    public static final String MODEL = "Model";/**鎵嬫満鍨嬪彿*/
+    public static final String MODEL = "Model";/**手机型号*/
     public static final String MAC = "Mac";
     public static final String OPERATOR = "Operator";
     public static final String NETTYPE = "NetType";
-    public static final String OTHER = "Other";/**寮?鍙戣?呭弬鏁帮紙寮?鍙戣?呮彁渚涳級*/
+    public static final String OTHER = "Other";/**开发者参数（开发者提供）*/
     public static final String BRAND = "Brand";
     public static final String RESOLUTION = "Resolution";
     
     public static final String SDK_VERSION_CODE = "1.2.1";
     public static final String APP_CODE = "e9ff112bc855bf4z";
     
-    //---鑾峰彇骞垮憡璇︽儏.
+    //---获取广告详情.
     public static final String ADVERTS_DETAIL_URL = "http://sdk.chinazmob.com/api/GetAdsInfo.php";
     public static final String ADVERTS_ID = "AdsId";
     
-    //--鐢ㄦ埛瀹屾垚瀹夎鐨刄RL
+    //--用户完成安装的URL
     public static final String WHEN_HAS_INSTALLED_URL = "http://sdk.chinazmob.com/api/FinishInstall.php";
     
-    //--鐢ㄦ埛瀹屾垚瀹夎鐨刄RL
+    //--用户完成安装的URL
     public static final String WHEN_TASK_FINISHED_URL = "http://sdk.chinazmob.com/api/FinishTask.php";
     
-    //--鑾峰彇APK鐨勪笅杞借矾鍔茬殑URL
+    //--获取APK的下载路劲的URL
     public static final String FETCH_APK_DOWNLOAD_URL = "http://sdk.chinazmob.com/api/GetApkDown.php";
     
-    //--鑾峰彇APK鐨勪笅杞借矾鍔茬殑URL
+    //--获取APK的下载路劲的URL
     public static final String FETCH_TASK_TIME_URL = "http://sdk.chinazmob.com/api/GetAdsTime.php";
 }

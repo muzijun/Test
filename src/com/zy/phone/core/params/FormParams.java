@@ -9,6 +9,7 @@ import org.json.JSONObject;
 
 import com.zy.phone.core.Constant;
 import com.zy.phone.core.params.PhoneSysConfig;
+import com.erm.integralwall.core.params.FormParams.FormConfig;
 import com.google.gson.JsonArray;
 
 import android.content.Context;
@@ -19,15 +20,18 @@ public class FormParams {
 
     private PhoneSysConfig mPhoneInfo;
 
-    public FormParams(Context application){
+    private FormConfig mFormConfig = null;
+    
+    public FormParams(Context application, FormConfig formConfig){
         mPhoneInfo = new PhoneSysConfig(application);
+        mFormConfig = formConfig;
     }
     
     /**
      * 获取广告列表所需的部分参数
      * @return
      */
-    public String getAdsListParamsMap(String other){
+    public String getAdsListParamsMap(){
     	
     	String retVal = "{}";
     	
@@ -37,7 +41,7 @@ public class FormParams {
 		JSONObject jsonObj = new JSONObject();
 		try {
 			jsonObj.put(Constant.PACKAGE, jsonArray);
-			jsonObj.put(Constant.ADP_CODE, Constant.APP_CODE);
+			jsonObj.put(Constant.ADP_CODE, mFormConfig.getAppCode());
 			jsonObj.put(Constant.IMEI, mPhoneInfo.getPhoneIMEI());
 			jsonObj.put(Constant.IP, mPhoneInfo.getIPAddress());
 			jsonObj.put(Constant.SDK_VERSION, Constant.SDK_VERSION_CODE);
@@ -50,7 +54,7 @@ public class FormParams {
 			jsonObj.put(Constant.NETTYPE, mPhoneInfo.getNetWorkType());
 			jsonObj.put(Constant.BRAND, mPhoneInfo.getPhoneBrand());
 			jsonObj.put(Constant.RESOLUTION, mPhoneInfo.getResolution());
-			jsonObj.put(Constant.OTHER, TextUtils.isEmpty(other) ? "ArMn" : other);
+			jsonObj.put(Constant.OTHER, mFormConfig.getUserId());
 			retVal = jsonObj.toString();
 		} catch (JSONException e) {
 			// TODO Auto-generated catch block
@@ -66,8 +70,9 @@ public class FormParams {
      */
     public Map<String, String> getBaseParamsMap(){
     	HashMap<String,String> map = new HashMap<String, String>();
-		map.put(Constant.ADP_CODE, Constant.APP_CODE);
+		map.put(Constant.ADP_CODE, mFormConfig.getAppCode());
 		map.put(Constant.IMEI,mPhoneInfo.getPhoneIMEI());
+		map.put(Constant.PACKAGE,mPhoneInfo.getPakageName());
 		return map;
     }
     
@@ -114,5 +119,38 @@ public class FormParams {
             return null;
         }
         return jsonObj.toString();
+    }
+    
+    public static class FormConfig{
+    	private String mAppcode = "";
+    	private String mUserId = "";
+    	
+    	/**
+    	 * 设置appcode，需要申请
+    	 * @param appCode
+    	 * @return
+    	 */
+    	public FormConfig setAppCode(String appCode){
+    		this.mAppcode = appCode;
+    		return this;
+    	}
+    	
+    	/**
+    	 * 用户自定义参数
+    	 * @param otherParam
+    	 * @return
+    	 */
+    	public FormConfig setUserId(String userId){
+    		this.mUserId = userId;
+    		return this;
+    	}
+    	
+    	public String getAppCode(){
+    		return mAppcode;
+    	}
+    	
+    	public String getUserId(){
+    		return mUserId;
+    	}
     }
 }
