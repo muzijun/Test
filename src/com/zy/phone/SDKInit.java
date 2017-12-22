@@ -12,6 +12,9 @@ import android.os.Handler;
 import android.os.Message;
 import android.widget.Toast;
 
+import com.erm.integralwall.core.Constant;
+import com.erm.integralwall.core.NetManager;
+import com.erm.integralwall.core.params.FormParams.FormConfig;
 import com.zy.phone.net.GetJson;
 import com.zy.phone.net.Integral;
 import com.zy.phone.sdk.SDKActivity;
@@ -52,6 +55,8 @@ public class SDKInit {
 			editor.putString("AppCode", AppCode);
 			editor.putString("Other", Other);
 			editor.putString("Token", "");
+			NetManager.getInstance().inject(context, null,
+					new FormConfig().setAppCode(AppCode).setUserId(Other));
 			editor.commit();
 		} else {
 			Toast.makeText(context, Variable.IS_KEY, Toast.LENGTH_SHORT).show();
@@ -81,8 +86,17 @@ public class SDKInit {
 					.show();
 		}
 	}
-	
-	
+
+	/**
+	 * json接口跳入网页详情
+	 * @param url 地址
+	 */
+	public static void showUI(Context context,String url) {
+		Intent appcode = new Intent(context, SDKActivity.class);
+		appcode.putExtra("url", url);
+		context.startActivity(appcode);
+	}
+
 	/**
 	 * 显示列表框框
 	 * 
@@ -106,7 +120,6 @@ public class SDKInit {
 					.show();
 		}
 	}
-
 
 	/**
 	 * 查看积分
@@ -195,7 +208,7 @@ public class SDKInit {
 				String Str_Code = jsonObjs_01.getString("Code");
 				String Str_Param = jsonObjs_01.getString("Param");
 
-				//成功，操作用户积分
+				// 成功，操作用户积分
 				if (Str_Code.equals("200")) {
 					JSONObject jsonObjs_02 = new JSONObject(Str_Param);
 					final String Str_Integral = jsonObjs_02
@@ -214,7 +227,7 @@ public class SDKInit {
 						}
 					});
 				}
-				//操作积分失败，用户积分不做变更
+				// 操作积分失败，用户积分不做变更
 				if (Str_Code.equals("409")) {
 					handler.post(new Runnable() {
 						@Override
@@ -230,7 +243,7 @@ public class SDKInit {
 					});
 				}
 			} catch (Exception e) {
-				//失败，不操作用户积分
+				// 失败，不操作用户积分
 				handler.post(new Runnable() {
 					@Override
 					public void run() {

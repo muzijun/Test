@@ -1,6 +1,7 @@
 package com.zy.phone.sdk;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.Environment;
 import android.util.Log;
@@ -11,9 +12,11 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import com.erm.integralwall.core.Constant;
 import com.zy.phone.R;
 import com.zy.phone.SDKInit;
 import com.zy.phone.net.Integral;
+import com.zy.phone.test.JsonListActivity;
 
 /**
  * 
@@ -23,6 +26,8 @@ import com.zy.phone.net.Integral;
 public class TestActiyity extends Activity implements OnClickListener, Integral {
 	// 获取广告列表
 	private Button getAdlist;
+	// json获取广告列表
+	private Button getAdlist_json;
 	// 查看积分
 	private Button check_integral;
 	// 扣除积分
@@ -48,7 +53,7 @@ public class TestActiyity extends Activity implements OnClickListener, Integral 
 
 	// 用户ID，用于记录开发者应用的唯一用户标识,没有为空
 
-	private String Other = "";
+	private String Other = "ArMn";
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -63,6 +68,7 @@ public class TestActiyity extends Activity implements OnClickListener, Integral 
 	private void initView() {
 
 		getAdlist = (Button) findViewById(R.id.getAdlist);
+		getAdlist_json=(Button)findViewById(R.id.getAdlist_json);
 		check_integral = (Button) findViewById(R.id.check_integral);
 		show_integral = (TextView) findViewById(R.id.show_integral);
 		minus_integral = (Button) findViewById(R.id.minus_integral);
@@ -74,6 +80,7 @@ public class TestActiyity extends Activity implements OnClickListener, Integral 
 		check_integral.setOnClickListener(this);
 		minus_integral.setOnClickListener(this);
 		add_integral.setOnClickListener(this);
+		getAdlist_json.setOnClickListener(this);
 		/*
 		 * 初始化信息 initAd()这个方法放在onCreate()里面，AdpCode 是开发者的秘钥Other 服务器回调的时候一起返回.
 		 */
@@ -87,6 +94,11 @@ public class TestActiyity extends Activity implements OnClickListener, Integral 
 			// 初始化列表
 			SDKInit.initAdList(this);
 			break;
+		case R.id.getAdlist_json:
+			// json初始化列表
+			Intent intent=new Intent(TestActiyity.this,JsonListActivity.class);
+			startActivity(intent);
+			break;
 		// 查看积分
 		case R.id.check_integral:
 			SDKInit.checkIntegral(this);
@@ -97,7 +109,6 @@ public class TestActiyity extends Activity implements OnClickListener, Integral 
 			break;
 		// 增加积分
 		case R.id.add_integral:
-
 			SDKInit.addIntegral(this, getIntgral(add_textintegral));
 			break;
 		default:

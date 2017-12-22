@@ -15,7 +15,11 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="获取广告列表" />
-
+    <Button
+        android:id="@+id/getAdlist_json"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="json获取广告列表" />
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content" >

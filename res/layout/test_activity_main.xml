@@ -1,0 +1,72 @@
+<LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+	xmlns:tools="http://schemas.android.com/tools"
+	android:orientation="vertical">
+    
+    <ListView 
+        android:id="@+id/ads_listview"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        ></ListView>
+
+    <!-- <LinearLayout 
+	    android:layout_width="match_parent"
+	    android:layout_height="wrap_content"
+		android:orientation="vertical" >
+	
+	    <Button
+	        android:id="@+id/adsList"
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        android:text="广告列表" />
+	
+	    <Button
+	        android:id="@+id/adsDetail"
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        android:text="广告详情" />
+	        
+	    <Button
+	        android:id="@+id/taskFinshed"
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        android:text="完成任务" />
+	    
+	    <Button
+	        android:id="@+id/hasInstalled"
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        android:text="完成安装" />
+	    
+	    <Button
+	        android:id="@+id/downloadUrl"
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        android:text="获取待下载的APK URL" />    
+	        
+	    <Button
+	        android:id="@+id/download"
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        android:text="下载APK" />  
+        <Button
+	        android:id="@+id/cancel"
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        android:text="取消下载" />  
+	        
+	        
+	    <TextView
+	        android:clickable="true"
+	        android:id="@+id/ads_textview"
+	        android:layout_width="match_parent"
+	        android:layout_height="match_parent"
+	        />
+	</LinearLayout> -->
+</LinearLayout>
