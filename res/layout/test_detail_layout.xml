@@ -1,28 +1,33 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent" >
 
     <TextView
         android:id="@+id/detail"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        />
-    
-    <Button 
+        android:layout_height="wrap_content" />
+
+    <Button
         android:id="@+id/download"
-        android:layout_alignParentBottom="true"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="下载"
-        />
+        android:layout_alignParentBottom="true"
+        android:text="下载" />
     
+    <Button
+        android:id="@+id/cancel"
+        android:layout_above="@id/download"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="取消" />
+
     <ListView
-        android:layout_above="@id/download" 
-        android:layout_below="@id/detail"
         android:id="@+id/task_listview"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        />
+        android:layout_above="@id/cancel"
+        android:layout_below="@id/detail" />
 
 </RelativeLayout>
