@@ -39,6 +39,7 @@ public class DetailActivity extends Activity{
 	private ListView mTaskListView;
 	private TextView mDetailTextVew;
 	private Button mDownload;
+	private Button mCancel;
 	private int mAdvertID = 0;
 	private String mUrl = null;
 	private DetailBzip mDetailBzip;
@@ -81,7 +82,7 @@ public class DetailActivity extends Activity{
 				}
 			});
 		} else {
-			Toast.makeText(this, "无效的参数", 1).show();;
+			Toast.makeText(this, "鏃犳晥鐨勫弬鏁�", 1).show();;
 		}
 		
 		mDownload = (Button) findViewById(R.id.download);
@@ -121,6 +122,16 @@ public class DetailActivity extends Activity{
 				});
 			}
 		});
+		
+		mCancel = (Button) findViewById(R.id.cancel);
+		mCancel.setOnClickListener(new OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				// TODO Auto-generated method stub
+				NetManager.getInstance().cancel(mUrl);
+			}
+		});
 	}
 	
 	private void download(String name, String url){
@@ -147,7 +158,7 @@ public class DetailActivity extends Activity{
 			public void onProgress(int percent) {
 				// TODO Auto-generated method stub
 				Log.d("onResponse", "progress=" + percent);
-				mDownload.setText("当前进度=" + percent +"%");
+				mDownload.setText("褰撳墠杩涘害=" + percent +"%");
 			}
 			
 			@Override
