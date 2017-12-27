@@ -64,7 +64,8 @@ public class AdInterface {
 	//
 	private DownloadChangeObserver downloadObserver;
 	//
-	private static final Uri CONTENT_URI = Uri.parse("content://downloads/my_downloads");
+	private static final Uri CONTENT_URI = Uri
+			.parse("content://downloads/my_downloads");
 	private Handler handler;
 
 	private SqlPackageName apn;
@@ -149,12 +150,14 @@ public class AdInterface {
 	 * @return
 	 */
 	@JavascriptInterface
-	public boolean saveAdDel(String packageName, String AdId, String taskTime, String step) {
+	public boolean saveAdDel(String packageName, String AdId, String taskTime,
+			String step) {
 		String add[] = step.split(";");
 		if (!add[0].equals("1")) {
 			add[1] = "0";
 		}
-		sp_packageName = activity.getSharedPreferences("zy_packageName", activity.MODE_PRIVATE);
+		sp_packageName = activity.getSharedPreferences("zy_packageName",
+				activity.MODE_PRIVATE);
 		editor = sp_packageName.edit();
 		editor.putString("short_message", add[1]);
 		editor.commit();
@@ -194,8 +197,8 @@ public class AdInterface {
 	 * @return
 	 */
 	@JavascriptInterface
-	public boolean saveAdDel(String packageName, String AdId, String taskTime, String stepp, String appName,
-			String taskInfo, String activitys) {
+	public boolean saveAdDel(String packageName, String AdId, String taskTime,
+			String stepp, String appName, String taskInfo, String activitys) {
 		String add[] = stepp.split(";");
 		if (!add[0].equals("1")) {
 			add[1] = "0";
@@ -237,7 +240,8 @@ public class AdInterface {
 				// adInfo.setRegister(false);
 			}
 		}
-		sp_packageName = activity.getSharedPreferences("zy_packageName", activity.MODE_PRIVATE);
+		sp_packageName = activity.getSharedPreferences("zy_packageName",
+				activity.MODE_PRIVATE);
 		editor = sp_packageName.edit();
 		editor.putString("short_message", add[1]);
 		editor.commit();
@@ -321,7 +325,8 @@ public class AdInterface {
 		handler.post(new Runnable() {
 			@Override
 			public void run() {
-				webview.loadUrl("javascript:checkDownStep('" + percentage + "')");
+				webview.loadUrl("javascript:checkDownStep('" + percentage
+						+ "')");
 			}
 		});
 	}
@@ -344,7 +349,8 @@ public class AdInterface {
 			resolveIntent.addCategory(Intent.CATEGORY_LAUNCHER);
 			resolveIntent.setPackage(pi.packageName);
 
-			List<ResolveInfo> apps = packageManager.queryIntentActivities(resolveIntent, 0);
+			List<ResolveInfo> apps = packageManager.queryIntentActivities(
+					resolveIntent, 0);
 
 			ResolveInfo ri = apps.iterator().next();
 			if (ri != null) {
@@ -397,7 +403,8 @@ public class AdInterface {
 			resolveIntent.addCategory(Intent.CATEGORY_LAUNCHER);
 			resolveIntent.setPackage(pi.packageName);
 
-			List<ResolveInfo> apps = packageManager.queryIntentActivities(resolveIntent, 0);
+			List<ResolveInfo> apps = packageManager.queryIntentActivities(
+					resolveIntent, 0);
 
 			ResolveInfo ri = apps.iterator().next();
 			if (ri != null) {
@@ -448,7 +455,8 @@ public class AdInterface {
 			resolveIntent.addCategory(Intent.CATEGORY_LAUNCHER);
 			resolveIntent.setPackage(pi.packageName);
 
-			List<ResolveInfo> apps = packageManager.queryIntentActivities(resolveIntent, 0);
+			List<ResolveInfo> apps = packageManager.queryIntentActivities(
+					resolveIntent, 0);
 
 			ResolveInfo ri = apps.iterator().next();
 			if (ri != null) {
@@ -482,19 +490,25 @@ public class AdInterface {
 			if (!MyFile.existFile(sdcard + "/zy/" + apppackage + ".apk")) {
 				if (prefs.getLong(DL_ID, 0) == 0) {
 					// 自动下载要在wifi下才下
-					downloadManager = (DownloadManager) activity.getSystemService(activity.DOWNLOAD_SERVICE);
-					Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS).mkdir();
+					downloadManager = (DownloadManager) activity
+							.getSystemService(activity.DOWNLOAD_SERVICE);
+					Environment.getExternalStoragePublicDirectory(
+							Environment.DIRECTORY_DOWNLOADS).mkdir();
 					Uri uri = Uri.parse(apkUrl);
-					DownloadManager.Request request = new DownloadManager.Request(uri);
-					request.setDestinationInExternalPublicDir("zy", apppackage + ".apk");
+					DownloadManager.Request request = new DownloadManager.Request(
+							uri);
+					request.setDestinationInExternalPublicDir("zy", apppackage
+							+ ".apk");
 					request.setTitle(appName);
 					request.setDescription(Variable.DOWNLOAD);
 					request.setShowRunningNotification(true);
 					request.setVisibleInDownloadsUi(true);
 					long downloadId = downloadManager.enqueue(request);
-					activity.registerReceiver(receiver, new IntentFilter(DownloadManager.ACTION_DOWNLOAD_COMPLETE));
+					activity.registerReceiver(receiver, new IntentFilter(
+							DownloadManager.ACTION_DOWNLOAD_COMPLETE));
 					downloadObserver = new DownloadChangeObserver(null);
-					activity.getContentResolver().registerContentObserver(CONTENT_URI, true, downloadObserver);
+					activity.getContentResolver().registerContentObserver(
+							CONTENT_URI, true, downloadObserver);
 					prefs.edit().putLong(DL_ID, downloadId).commit();
 					prefs.edit().putString("name", apppackage).commit();
 					editor.putString("zy." + apppackage, appName).commit();
@@ -503,14 +517,19 @@ public class AdInterface {
 				editor.putString("zy." + apppackage, appName).commit();
 				Intent intent = new Intent(Intent.ACTION_VIEW);
 				intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-				intent.setDataAndType(Uri.parse("file:///" + Environment.getExternalStorageDirectory().getAbsolutePath()
-						+ "/zy/" + apppackage + ".apk"), "application/vnd.android.package-archive");
+				intent.setDataAndType(Uri.parse("file:///"
+						+ Environment.getExternalStorageDirectory()
+								.getAbsolutePath() + "/zy/" + apppackage
+						+ ".apk"), "application/vnd.android.package-archive");
 				activity.startActivity(intent);
 
 				if (null != appName && !"".equals(appName.trim())) {
-					Toast.makeText(activity, "经安全检测《" + appName + "》为官方版本，请放心使用", Toast.LENGTH_LONG).show();
+					Toast.makeText(activity,
+							"经安全检测《" + appName + "》为官方版本，请放心使用",
+							Toast.LENGTH_LONG).show();
 				} else {
-					Toast.makeText(activity, "经安全检测,该应用为官方版本，请放心使用", Toast.LENGTH_LONG).show();
+					Toast.makeText(activity, "经安全检测,该应用为官方版本，请放心使用",
+							Toast.LENGTH_LONG).show();
 				}
 			}
 		} catch (Exception e) {
@@ -530,32 +549,41 @@ public class AdInterface {
 	 *            包名
 	 */
 	@JavascriptInterface
-	public void downloadApp(String apkUrl, String appName, String apppackage, String wifi, String time) {
+	public void downloadApp(String apkUrl, String appName, String apppackage,
+			String wifi, String time) {
 		try {
 			// 先判断是否已下载
 			if (!MyFile.existFile(sdcard + "/zy/" + apppackage + ".apk")) {
 				String nettype = new PhoneInfo(activity).getNetWorkType();
 				// 自动下载要在wifi下才下
-				if ((wifi.equals("0") && nettype.equals("1")) || wifi.equals("1")) {
+				if ((wifi.equals("0") && nettype.equals("1"))
+						|| wifi.equals("1")) {
 					if (prefs.getLong(DL_ID, 0) == 0) {
-						downloadManager = (DownloadManager) activity.getSystemService(activity.DOWNLOAD_SERVICE);
-						Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS).mkdir();
+						downloadManager = (DownloadManager) activity
+								.getSystemService(activity.DOWNLOAD_SERVICE);
+						Environment.getExternalStoragePublicDirectory(
+								Environment.DIRECTORY_DOWNLOADS).mkdir();
 						Uri uri = Uri.parse(apkUrl);
-						DownloadManager.Request request = new DownloadManager.Request(uri);
+						DownloadManager.Request request = new DownloadManager.Request(
+								uri);
 						// 保存在sd卡
-						request.setDestinationInExternalPublicDir("zy", apppackage + ".apk");
+						request.setDestinationInExternalPublicDir("zy",
+								apppackage + ".apk");
 						request.setTitle(appName);// 提示
 						request.setDescription(Variable.DOWNLOAD);// 提示
 						request.setShowRunningNotification(true);
 						request.setVisibleInDownloadsUi(true);
 						long downloadId = downloadManager.enqueue(request);
-						activity.registerReceiver(receiver, new IntentFilter(DownloadManager.ACTION_DOWNLOAD_COMPLETE));
+						activity.registerReceiver(receiver, new IntentFilter(
+								DownloadManager.ACTION_DOWNLOAD_COMPLETE));
 						downloadObserver = new DownloadChangeObserver(null);
-						activity.getContentResolver().registerContentObserver(CONTENT_URI, true, downloadObserver);
+						activity.getContentResolver().registerContentObserver(
+								CONTENT_URI, true, downloadObserver);
 						prefs.edit().putLong(DL_ID, downloadId).commit();
 						prefs.edit().putString("name", apppackage).commit();
 						// 保存
-						prefs_time = activity.getSharedPreferences("dwontime", activity.MODE_PRIVATE);
+						prefs_time = activity.getSharedPreferences("dwontime",
+								activity.MODE_PRIVATE);
 						prefs_time.edit().putString(apppackage, time).commit();
 						editor.putString("zy." + apppackage, appName).commit();
 					}
@@ -565,14 +593,19 @@ public class AdInterface {
 
 				Intent intent = new Intent(Intent.ACTION_VIEW);
 				intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-				intent.setDataAndType(Uri.parse("file:///" + Environment.getExternalStorageDirectory().getAbsolutePath()
-						+ "/zy/" + apppackage + ".apk"), "application/vnd.android.package-archive");
+				intent.setDataAndType(Uri.parse("file:///"
+						+ Environment.getExternalStorageDirectory()
+								.getAbsolutePath() + "/zy/" + apppackage
+						+ ".apk"), "application/vnd.android.package-archive");
 				activity.startActivity(intent);
 				Thread.sleep(100);
 				if (null != appName && !"".equals(appName.trim())) {
-					Toast.makeText(activity, "经安全检测《" + appName + "》为官方版本，请放心使用", Toast.LENGTH_LONG).show();
+					Toast.makeText(activity,
+							"经安全检测《" + appName + "》为官方版本，请放心使用",
+							Toast.LENGTH_LONG).show();
 				} else {
-					Toast.makeText(activity, "经安全检测,该应用为官方版本，请放心使用", Toast.LENGTH_LONG).show();
+					Toast.makeText(activity, "经安全检测,该应用为官方版本，请放心使用",
+							Toast.LENGTH_LONG).show();
 				}
 			}
 		} catch (Exception e) {
@@ -594,47 +627,59 @@ public class AdInterface {
 	 *            安卓5.0以下注册的活动Activity类名，根据Activity类名的活动路径，判定用户有没有注册成功
 	 */
 	@JavascriptInterface
-	public void downloadAppOld(String apkUrl, String appName, String apppackage, String wifi, String time,
-			String adId) {
+	public void downloadAppOld(String apkUrl, String appName,
+			String apppackage, String wifi, String time, String adId) {
 
 		try {
 			// 初始化监听数据
-			AdInfo adInfo = ActivityCacheUtils.getInstance().getAdInfo(apppackage);
+			AdInfo adInfo = ActivityCacheUtils.getInstance().getAdInfo(
+					apppackage);
 			adInfo.setOpenFlag(true); // 任务详情提示
 			// adInfo.setAlertFlag(true); //任务未完成提示
 			adInfo.setApkUrl(apkUrl);
 			adInfo.setAppName(appName);
 			ActivityCacheUtils.getInstance().setLatestPackName(apppackage); // 最近打开包名
-			ActivityCacheUtils.getInstance().setLatestAdId(Integer.valueOf(adId)); // 最近打开广告ID
+			ActivityCacheUtils.getInstance().setLatestAdId(
+					Integer.valueOf(adId)); // 最近打开广告ID
 
 			editor.putString("Taskinfo", adInfo.getTaskInfo()).commit();
 			// 先判断是否已下载
 			if (!MyFile.existFile(sdcard + "/zy/" + apppackage + ".apk")) {
 				String nettype = new PhoneInfo(activity).getNetWorkType();
 				// 自动下载要在wifi下才下
-				if ((wifi.equals("0") && nettype.equals("1")) || wifi.equals("1")) {
+				if ((wifi.equals("0") && nettype.equals("1"))
+						|| wifi.equals("1")) {
 					if (prefs.getLong(DL_ID, 0) >= 0) {
-						downloadManager = (DownloadManager) activity.getSystemService(activity.DOWNLOAD_SERVICE);
-						Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS).mkdir();
+						downloadManager = (DownloadManager) activity
+								.getSystemService(activity.DOWNLOAD_SERVICE);
+						Environment.getExternalStoragePublicDirectory(
+								Environment.DIRECTORY_DOWNLOADS).mkdir();
 						Uri uri = Uri.parse(apkUrl);
-						DownloadManager.Request request = new DownloadManager.Request(uri);
+						DownloadManager.Request request = new DownloadManager.Request(
+								uri);
 						// 保存在sd卡
-						request.setDestinationInExternalPublicDir("zy", apppackage + ".apk");
+						request.setDestinationInExternalPublicDir("zy",
+								apppackage + ".apk");
 						request.setTitle(appName);// 提示
 						request.setDescription(Variable.DOWNLOAD);// 提示
 						request.setShowRunningNotification(true);
 						request.setVisibleInDownloadsUi(true);
 						long downloadId = downloadManager.enqueue(request);
-						activity.registerReceiver(receiver, new IntentFilter(DownloadManager.ACTION_DOWNLOAD_COMPLETE));
+						activity.registerReceiver(receiver, new IntentFilter(
+								DownloadManager.ACTION_DOWNLOAD_COMPLETE));
 						downloadObserver = new DownloadChangeObserver(null);
-						activity.getContentResolver().registerContentObserver(CONTENT_URI, true, downloadObserver);
+						activity.getContentResolver().registerContentObserver(
+								CONTENT_URI, true, downloadObserver);
 						prefs.edit().putLong(DL_ID, downloadId).commit();
 						prefs.edit().putString("name", apppackage).commit();
 						// 保存
-						prefs_time = activity.getSharedPreferences("dwontime", activity.MODE_PRIVATE);
+						prefs_time = activity.getSharedPreferences("dwontime",
+								activity.MODE_PRIVATE);
 						prefs_time.edit().putString(apppackage, time).commit();
 						editor.putString("zy." + apppackage, appName).commit();
-						Toast.makeText(activity, "《" + appName + "》已加入下载队列...请稍后...", Toast.LENGTH_LONG).show();
+						Toast.makeText(activity,
+								"《" + appName + "》已加入下载队列...请稍后...",
+								Toast.LENGTH_LONG).show();
 					}
 				}
 			} else {
@@ -642,14 +687,19 @@ public class AdInterface {
 
 				Intent intent = new Intent(Intent.ACTION_VIEW);
 				intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-				intent.setDataAndType(Uri.parse("file:///" + Environment.getExternalStorageDirectory().getAbsolutePath()
-						+ "/zy/" + apppackage + ".apk"), "application/vnd.android.package-archive");
+				intent.setDataAndType(Uri.parse("file:///"
+						+ Environment.getExternalStorageDirectory()
+								.getAbsolutePath() + "/zy/" + apppackage
+						+ ".apk"), "application/vnd.android.package-archive");
 				activity.startActivity(intent);
 				Thread.sleep(10);
 				if (null != appName && !"".equals(appName.trim())) {
-					Toast.makeText(activity, "经安全检测《" + appName + "》为官方版本，请放心使用", Toast.LENGTH_LONG).show();
+					Toast.makeText(activity,
+							"经安全检测《" + appName + "》为官方版本，请放心使用",
+							Toast.LENGTH_LONG).show();
 				} else {
-					Toast.makeText(activity, "经安全检测,该应用为官方版本，请放心使用", Toast.LENGTH_LONG).show();
+					Toast.makeText(activity, "经安全检测,该应用为官方版本，请放心使用",
+							Toast.LENGTH_LONG).show();
 				}
 			}
 
@@ -671,45 +721,58 @@ public class AdInterface {
 	 *            安卓5.0以下注册的活动Activity类名，根据Activity类名的活动路径，判定用户有没有注册成功
 	 */
 	@JavascriptInterface
-	public void downloadApp(String apkUrl, String appName, String apppackage, String wifi, String time, String adId) {
+	public void downloadApp(String apkUrl, String appName, String apppackage,
+			String wifi, String time, String adId) {
 		try {
 			// 初始化监听数据
-			AdInfo adInfo = ActivityCacheUtils.getInstance().getAdInfo(apppackage);
+			AdInfo adInfo = ActivityCacheUtils.getInstance().getAdInfo(
+					apppackage);
 			adInfo.setOpenFlag(true); // 任务详情提示
 			// adInfo.setAlertFlag(true); //任务未完成提示
 			adInfo.setApkUrl(apkUrl);
 			adInfo.setAppName(appName);
 			ActivityCacheUtils.getInstance().setLatestPackName(apppackage); // 最近打开包名
-			ActivityCacheUtils.getInstance().setLatestAdId(Integer.valueOf(adId)); // 最近打开广告ID
+			ActivityCacheUtils.getInstance().setLatestAdId(
+					Integer.valueOf(adId)); // 最近打开广告ID
 
 			editor.putString("Taskinfo", adInfo.getTaskInfo()).commit();
 			// 先判断是否已下载
 			if (!MyFile.existFile(sdcard + "/zy/" + apppackage + ".apk")) {
 				String nettype = new PhoneInfo(activity).getNetWorkType();
 				// 自动下载要在wifi下才下
-				if ((wifi.equals("0") && nettype.equals("1")) || wifi.equals("1")) {
+				if ((wifi.equals("0") && nettype.equals("1"))
+						|| wifi.equals("1")) {
 					if (prefs.getLong(DL_ID, 0) >= 0) {
-						downloadManager = (DownloadManager) activity.getSystemService(activity.DOWNLOAD_SERVICE);
-						Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS).mkdir();
+						downloadManager = (DownloadManager) activity
+								.getSystemService(activity.DOWNLOAD_SERVICE);
+						Environment.getExternalStoragePublicDirectory(
+								Environment.DIRECTORY_DOWNLOADS).mkdir();
 						Uri uri = Uri.parse(apkUrl);
-						DownloadManager.Request request = new DownloadManager.Request(uri);
+						DownloadManager.Request request = new DownloadManager.Request(
+								uri);
 						// 保存在sd卡
-						request.setDestinationInExternalPublicDir("zy", apppackage + ".apk");
+						request.setDestinationInExternalPublicDir("zy",
+								apppackage + ".apk");
 						request.setTitle(appName);// 提示
 						request.setDescription(Variable.DOWNLOAD);// 提示
 						request.setShowRunningNotification(true);
 						request.setVisibleInDownloadsUi(true);
 						long downloadId = downloadManager.enqueue(request);
-						activity.registerReceiver(receiver, new IntentFilter(DownloadManager.ACTION_DOWNLOAD_COMPLETE));
+						activity.registerReceiver(receiver, new IntentFilter(
+								DownloadManager.ACTION_DOWNLOAD_COMPLETE));
 						downloadObserver = new DownloadChangeObserver(null);
-						activity.getContentResolver().registerContentObserver(CONTENT_URI, true, downloadObserver);
+						activity.getContentResolver().registerContentObserver(
+								CONTENT_URI, true, downloadObserver);
 						prefs.edit().putLong(DL_ID, downloadId).commit();
 						prefs.edit().putString("name", apppackage).commit();
 						// 保存
-						prefs_time = activity.getSharedPreferences("dwontime", activity.MODE_PRIVATE);
+						prefs_time = activity.getSharedPreferences("dwontime",
+								activity.MODE_PRIVATE);
 						prefs_time.edit().putString(apppackage, time).commit();
 						editor.putString("zy." + apppackage, appName).commit();
-						Toast.makeText(activity, "《" + appName + "》已加入下载队列...请稍后...", Toast.LENGTH_LONG).show();
+						Toast.makeText(activity,
+								"《" + appName + "》已加入下载队列...请稍后...",
+								Toast.LENGTH_LONG).show();
 					}
 				}
 			} else {
@@ -717,22 +780,27 @@ public class AdInterface {
 				Intent intent = new Intent(Intent.ACTION_VIEW);
 				intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
 
-				File file = new File(
-						Environment.getExternalStorageDirectory().getAbsolutePath() + "/zy/" + apppackage + ".apk");
+				File file = new File(Environment.getExternalStorageDirectory()
+						.getAbsolutePath() + "/zy/" + apppackage + ".apk");
 				if (Build.VERSION.SDK_INT >= 24) {
 					intent.setFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
-					Uri contentUri = FileProvider.getUriForFile(activity, activity.getPackageName() + ".fileprovider",
-							file);
-					intent.setDataAndType(contentUri, "application/vnd.android.package-archive");
+					Uri contentUri = FileProvider.getUriForFile(activity,
+							activity.getPackageName() + ".fileprovider", file);
+					intent.setDataAndType(contentUri,
+							"application/vnd.android.package-archive");
 				} else {
-					intent.setDataAndType(Uri.fromFile(file), "application/vnd.android.package-archive");
+					intent.setDataAndType(Uri.fromFile(file),
+							"application/vnd.android.package-archive");
 				}
 				activity.startActivity(intent);
 				Thread.sleep(10);
 				if (null != appName && !"".equals(appName.trim())) {
-					Toast.makeText(activity, "经安全检测《" + appName + "》为官方版本，请放心使用", Toast.LENGTH_LONG).show();
+					Toast.makeText(activity,
+							"经安全检测《" + appName + "》为官方版本，请放心使用",
+							Toast.LENGTH_LONG).show();
 				} else {
-					Toast.makeText(activity, "经安全检测,该应用为官方版本，请放心使用", Toast.LENGTH_LONG).show();
+					Toast.makeText(activity, "经安全检测,该应用为官方版本，请放心使用",
+							Toast.LENGTH_LONG).show();
 				}
 			}
 
@@ -749,10 +817,15 @@ public class AdInterface {
 		query.setFilterById(prefs.getLong(DL_ID, 0));
 		Cursor c = downloadManager.query(query);
 		if (c.moveToFirst()) {
-			int status = c.getInt(c.getColumnIndex(DownloadManager.COLUMN_STATUS));
-			int daonali = c.getInt(c.getColumnIndex(DownloadManager.COLUMN_BYTES_DOWNLOADED_SO_FAR));
-			int tatalsize = c.getInt(c.getColumnIndex(DownloadManager.COLUMN_TOTAL_SIZE_BYTES));
-			checkDownStep(div(Double.valueOf(daonali), Double.valueOf(tatalsize), 3));
+			int status = c.getInt(c
+					.getColumnIndex(DownloadManager.COLUMN_STATUS));
+			int daonali = c
+					.getInt(c
+							.getColumnIndex(DownloadManager.COLUMN_BYTES_DOWNLOADED_SO_FAR));
+			int tatalsize = c.getInt(c
+					.getColumnIndex(DownloadManager.COLUMN_TOTAL_SIZE_BYTES));
+			checkDownStep(div(Double.valueOf(daonali),
+					Double.valueOf(tatalsize), 3));
 			switch (status) {
 			case DownloadManager.STATUS_PAUSED:
 			case DownloadManager.STATUS_PENDING:
@@ -790,7 +863,8 @@ public class AdInterface {
 			apn.CreateTable();
 		}
 		try {
-			ScTypeInfo = apn.GetDate("PNO=?", new String[] { "0" }, null, null, null);
+			ScTypeInfo = apn.GetDate("PNO=?", new String[] { "0" }, null, null,
+					null);
 			if (ScTypeInfo.equals("0")) {
 				for (int i = 0; i < appList.size(); i++) {
 					PackageInfo pinfo = appList.get(i);
@@ -799,7 +873,8 @@ public class AdInterface {
 
 				}
 			} else {
-				JSONArray jsonObjs = new JSONObject(ScTypeInfo).getJSONArray("Data");
+				JSONArray jsonObjs = new JSONObject(ScTypeInfo)
+						.getJSONArray("Data");
 				for (int i = 0; i < jsonObjs.length(); i++) {
 					JSONObject jsonObj = ((JSONObject) jsonObjs.opt(i));
 					packagename.add(jsonObj.getString("PName"));
@@ -867,7 +942,8 @@ public class AdInterface {
 	private void stopReceiver() {
 		try {
 			if (downloadObserver != null) {
-				activity.getContentResolver().unregisterContentObserver(downloadObserver);
+				activity.getContentResolver().unregisterContentObserver(
+						downloadObserver);
 			}
 			if (receiver != null) {
 				activity.unregisterReceiver(receiver);
@@ -923,15 +999,18 @@ public class AdInterface {
 	 * 打开子窗口
 	 */
 	@JavascriptInterface
-	public void openNewBrow(String url) {
+	public void openNewBrow(final String url) {
 		if (null == webview)
 			return;
-
 		if (!url.startsWith("http:") && !url.startsWith("https:")) {
 			return;
 		}
-
-		webview.loadUrl(url);
+		handler.post(new Runnable() {
+			@Override
+			public void run() {
+				SDKInit.showUI(activity, url);
+			}
+		});
 	}
 
 	/**
@@ -940,7 +1019,17 @@ public class AdInterface {
 	@JavascriptInterface
 	public void closeBrow() {
 		if (null != webview)
-			webview.goBack();
+			handler.post(new Runnable() {
+				@Override
+				public void run() {
+					if (webview.canGoBack()) {
+						webview.goBack();
+					}else{
+						activity.finish();
+					}
+
+				}
+			});
 	}
 
 }
