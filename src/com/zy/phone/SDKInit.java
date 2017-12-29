@@ -54,10 +54,10 @@ public class SDKInit {
 			SharedPreferences.Editor editor = init.edit();
 			editor.putString("AppCode", AppCode);
 			editor.putString("Other", Other);
-			editor.putString("Token", "");
 			NetManager.getInstance().inject(context, null,
 					new FormConfig().setAppCode(AppCode).setUserId(Other));
 			editor.commit();
+			new GetJson(context);
 		} else {
 			Toast.makeText(context, Variable.IS_KEY, Toast.LENGTH_SHORT).show();
 		}
