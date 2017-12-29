@@ -71,8 +71,6 @@ public class SDKInit {
 	public static void initAdList(Context context) {
 		if (MyFile.existSDCard()) {
 			// 进行判断如果已经有同样jar打开就不在显示
-			SharedPreferences zy_init = context.getSharedPreferences("zy_init",
-					context.MODE_PRIVATE);
 			ActivityManager mActivityManager = (ActivityManager) context
 					.getSystemService(context.ACTIVITY_SERVICE);
 			List<ActivityManager.RunningServiceInfo> mServiceList = mActivityManager
